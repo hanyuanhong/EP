@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>war</packaging>
+
+  <name>web01</name>
+  <groupId>com.hyh</groupId>
+  <artifactId>web01</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.hyh</groupId>
+      <artifactId>java01</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <!--排除依赖-->
+      <exclusions>
+        <exclusion>
+          <!--要排除的依赖的坐标，不需要指定版本号-->
+          <!--意味着只能排除某一种依赖，而不能排除某个依赖的特定版本-->
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+
+  <!--构建-->
+  <build>
+    <!--配置插件-->
+    <plugins>
+      <plugin>
+        <!--插件坐标-->
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <port>8080</port>
+          <path>/</path>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <!--配置项目jdk版本，解决：Maven Build时显示【ERROR】不再支持源选项5。请使用7或更高版本 问题-->
+    <profile>
+      <id>jdk-16-0-1</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <jdk>16</jdk>
+      </activation>
+      <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+      </properties>
+    </profile>
+  </profiles>
+
+</project>
